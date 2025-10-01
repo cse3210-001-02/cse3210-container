@@ -1,0 +1,55 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker",
+            "type": "shell",
+            "command": "docker",
+            "args": [
+                "build",
+                "-t",
+                "ghcr.io/cse3210-001-02/cse3210-container:latest",
+                ".",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false,
+            },
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "docker",
+            "args": ["run", "-it", "--rm", "cse3210-container", "bash"],
+            "group": {
+                "kind": "test",
+                "isDefault": true,
+            },
+            "dependsOn": ["docker"],
+        },
+        {
+            "label": "act: test",
+            "type": "shell",
+            "command": "act",
+            "args": [
+                "--artifact-server-path",
+                "/var/tmp/.artifacts",
+                "--eventpath",
+                "./event.json",
+                "--secret-file",
+                ".secrets",
+            ],
+            "options": {
+                "env": {
+                    "TMPDIR": "/var/tmp",
+                },
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true,
+            },
+        },
+    ],
+}
