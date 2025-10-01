@@ -24,7 +24,7 @@
             "command": "docker",
             "args": ["run", "-it", "--rm", "cse3210-container", "bash"],
             "group": {
-                "kind": "test",
+                "kind": "build",
                 "isDefault": true,
             },
             "dependsOn": ["docker"],
