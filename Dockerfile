@@ -28,11 +28,12 @@ RUN curl -fSL https://github.com/ninja-build/ninja/releases/download/v1.13.1/nin
 RUN wget -O /tmp/llvm.sh https://apt.llvm.org/llvm.sh \
     && chmod +x /tmp/llvm.sh \
     && sudo /tmp/llvm.sh 21 \
-    && sudo apt-get install -y clang-format-21 \
+    && sudo apt-get install -y clang-format-21 clang-tidy-21 \
     && sudo ln -s /usr/bin/clang-21 /usr/bin/cc \
     && sudo ln -s /usr/bin/clang++-21 /usr/bin/c++ \
     && sudo ln -s /usr/bin/clangd-21 /usr/bin/clangd \
     && sudo ln -s /usr/bin/clang-format-21 /usr/bin/clang-format \
+    && sudo ln -s /usr/bin/clang-tidy-21 /usr/bin/clang-tidy \
     && rm -f /tmp/llvm.sh
 ENV CC=clang-21 CXX=clang++-21
 
