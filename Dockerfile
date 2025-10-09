@@ -8,7 +8,7 @@ ARG USER_GID=$USER_UID
 
 
 RUN apt-get update && apt-get install -y \
-    && apt-get install -y sudo curl git unzip wget lsb-release software-properties-common gnupg \
+    && apt-get install -y sudo curl git unzip wget lsb-release software-properties-common gnupg pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # create user
