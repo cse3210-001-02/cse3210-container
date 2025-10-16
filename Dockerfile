@@ -1,3 +1,7 @@
+FROM rust:bookworm AS teco-builder
+
+RUN cargo install teco
+
 FROM debian:bookworm-slim
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
@@ -44,3 +48,7 @@ RUN sudo apt-get install -y cmake \
 # meson
 RUN uv tool install meson
 ENV PATH="/home/$USERNAME/.local/bin:$PATH"
+
+# teco
+COPY --from=teco-builder /usr/local/cargo/bin/teco /usr/local/bin/teco
+ENV PATH="/home/$USERNAME/.cargo/bin:$PATH"
