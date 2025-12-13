@@ -1,6 +1,6 @@
-FROM rust:bookworm AS teco-builder
+FROM rust:bookworm AS rust-builder
 
-RUN cargo install teco
+RUN cargo install teco hawkeye
 
 FROM debian:bookworm-slim
 
@@ -45,10 +45,14 @@ ENV CC=clang-21 CXX=clang++-21
 RUN sudo apt-get install -y cmake \
     && sudo rm -rf /var/lib/apt/lists/*
 
-# meson
-RUN uv tool install meson
+# meson, gcovr
+RUN uv tool install meson \
+    && uv tool install gcovr
 ENV PATH="/home/$USERNAME/.local/bin:$PATH"
 
-# teco
-COPY --from=teco-builder /usr/local/cargo/bin/teco /usr/local/bin/teco
+# teco, hawkeye
+COPY --from=rust-builder /usr/local/cargo/bin/teco /usr/local/bin/teco
+COPY --from=rust-builder /usr/local/cargo/bin/hawkeye /usr/local/bin/hawkeye
 ENV PATH="/home/$USERNAME/.cargo/bin:$PATH"
+
+
